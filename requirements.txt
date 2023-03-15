@@ -1,0 +1,7 @@
+ipywidgets
+pandas
+matplotlib
+plotly
+nbformat
+darts
+tabulate
