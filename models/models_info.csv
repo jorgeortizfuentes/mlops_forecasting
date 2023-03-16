@@ -1,0 +1,2 @@
+model_name,rmse_score,mae_score,trained_date,input_chunk_length,output_chunk_length,n_epochs,num_layers,num_filters,dropout,random_state,optimizer_cls,pl_trainer_kwargs,batch_size,model_class,model_type,last_date
+tcn_model_20230316-161739.pt,461.6472534387056,337.17959874934314,20230316-182742,84,1,17,7,246,0.3429636281526173,13,torch.optim.Adam,gpu,3072,TCNModel,Time Series,2020-03-30 23:50:00

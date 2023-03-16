@@ -195,7 +195,7 @@ class Trainer:
         self.models_info_path = os.path.join(PATH_TO_SAVE_MODELS, 'models_info.csv')
 
         if not os.path.exists(self.models_info_path):
-            models_info = pd.DataFrame(columns=model_info_dict.keys())
+            models_info = pd.DataFrame(model_info_dict)
             models_info.to_csv(self.models_info_path, index=False)
         else:
             models_info = pd.DataFrame(model_info_dict)
