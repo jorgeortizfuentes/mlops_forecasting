@@ -4,6 +4,10 @@
 
 Este es un desafío de aprendizaje automático de dos partes. Primero, se entrenaron modelos para predecir la energía producida por un aerogenerador dadas ciertas variables. En la segunda parte, se construyó una API para que el modelo esté disponible en línea.
 
+# Hardware y versiones
+
+Este código se diseñó y se testeó usando Python 3.8.16 en una máquina con Ubuntu 22.04 con 2 GPU NVIDIA RTX A6000.
+
 ## Parte 1: Entrenamiento
 
 En esta parte del desafío se debe escribir código para entrenar y preparar un modelo de aprendizaje automático que permita predecir la energía producida por un aerogenerador dadas ciertas variables.
