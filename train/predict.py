@@ -35,7 +35,7 @@ class PowerPredictor:
         # Count the number of times between the last date and the date we want (by 10 minutes)
         return (date - self.last_date).days * 144 + (date - self.last_date).seconds // 600
 
-    def predict_power_output(self, date: datetime):
+    def predict(self, date: datetime):
         """        
         Predicts the power output for the given datetime.
         
@@ -54,6 +54,6 @@ if __name__ == "__main__":
     # Example usage
     power_predictor = PowerPredictor(PATH_TO_SAVE_MODELS)
     date = datetime(2020, 4, 5, 18, 50)
-    predicted_power_output = power_predictor.predict_power_output(date)
+    predicted_power_output = power_predictor.predict(date)
     print(predicted_power_output)
     

@@ -7,3 +7,5 @@ nbformat
 darts
 tabulate
 optuna
+uvicorn
+fastapi
