@@ -19,5 +19,8 @@ df = df.dropna(subset=["ActivePower"])
 # Delete WTG column
 df = df.drop(columns=["WTG"])
 
+# Delete duplicates columns (Blade3PitchAngle, WindDirection)
+df = df.drop(columns=["Blade3PitchAngle", "WindDirection"])
+
 # Reset index
 df.reset_index(drop=True, inplace=True)

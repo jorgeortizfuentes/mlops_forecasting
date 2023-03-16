@@ -36,8 +36,8 @@ def objective(trial):
                      random_state=13,
                      optimizer_cls = torch.optim.Adam,
                      optimizer_kwargs={"lr": 1e-3},
-                     pl_trainer_kwargs={"accelerator": "gpu", "devices": [0]},
-                     batch_size=1024*10)
+                     pl_trainer_kwargs={"accelerator": "gpu", "devices": [1]},
+                     batch_size=1024*3)
 
     # Fit the model on the training set
     model.fit(train)
@@ -64,4 +64,4 @@ def objective(trial):
 study = optuna.create_study(direction='minimize')
 
 # Run the optimization
-study.optimize(objective, x=50, show_progress_bar=True)
+study.optimize(objective, n_trials=50, show_progress_bar=True)
