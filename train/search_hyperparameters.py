@@ -1,10 +1,15 @@
 import pandas as pd
-from preprocess import df
+from preprocess import DataPreprocessor
+from config import PATH_TO_SAVE_MODELS, DATA_PATH
 from darts.metrics import mae, rmse
 import optuna
 from darts import TimeSeries
 from darts.models import TCNModel
 import torch
+
+
+preprocessor = DataPreprocessor(DATA_PATH)
+df = preprocessor.preprocess()
 
 series = TimeSeries.from_dataframe(df,
                                    time_col="ds", 
