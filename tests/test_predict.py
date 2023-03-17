@@ -22,7 +22,12 @@ class TestPowerPredictor(unittest.TestCase):
 
     def test_predict(self):
         output = self.power_predictor.predict(self.date)
-        self.assertIsInstance(output, dict)
+        self.assertIsInstance(output, list)
+        # output[0] is a dict with keys "ds" and "ActivePower"
+        self.assertIsInstance(output[0], dict)
+        self.assertIsInstance(output[0]["ds"], str)
+        self.assertIsInstance(output[0]["ActivePower"], float)
+        self.assertEqual(output[-1]["ds"], self.date_str)
 
 if __name__ == '__main__':
     unittest.main()

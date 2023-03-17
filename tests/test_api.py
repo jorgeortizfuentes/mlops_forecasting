@@ -15,7 +15,8 @@ class TestMain(unittest.TestCase):
     def test_predict_success(self):
         response = client.get("/predict/2020-04-01 00:00")
         self.assertEqual(response.status_code, 200)
-        self.assertIn("ActivePower", response.json())
+        self.assertIn("ActivePower", response.json()[0])
+        self.assertIn("ds", response.json()[0])
 
     def test_predict_incorrect_format(self):
         response = client.get("/predict/2021-04-01")

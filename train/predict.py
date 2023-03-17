@@ -19,7 +19,9 @@ class PowerPredictor:
         self.models_info = pd.read_csv(os.path.join(model_path, "models_info.csv")).iloc[-1].to_dict()
         self.last_date = datetime.strptime(self.models_info["last_date"], "%Y-%m-%d %H:%M:%S")
         self.model_name = self.models_info["model_name"]
-        self.model = TCNModel.load(os.path.join(model_path, self.model_name))
+        self.model = TCNModel.load(os.path.join(model_path, self.model_name), map_location="cpu")
+        self.model.to_cpu()
+
 
     def get_time_position(self, date: datetime):
         """
@@ -47,7 +49,9 @@ class PowerPredictor:
         """
         n_predictions = self.get_time_position(date)
         output = self.model.predict(n_predictions)
-        return output["ActivePower"].pd_dataframe().to_dict()
+        output = output["ActivePower"].pd_dataframe().reset_index(drop=False)
+        output["ds"] = output["ds"].dt.strftime("%Y-%m-%d %H:%M")
+        return output.to_dict(orient="records")
 
 
 if __name__ == "__main__":

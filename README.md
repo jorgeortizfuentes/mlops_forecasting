@@ -123,11 +123,29 @@ El código incluye un ejemplo de uso al final del archivo. En este ejemplo, se c
 
 ## Parte 2: API
 
-En esta parte, se construyó una API REST con FastAPI para disponibilizar el modelo en línea
+En esta parte, se construyó una API REST con FastAPI para disponibilizar el modelo en línea.
 
 ## Uso
 
+La API de predicción de energía eólica funciona de la siguiente manera:
+
+1. El usuario envía una solicitud GET a la ruta `/predict/{date}` donde `{date}` es la fecha y hora para la cual se desea hacer la predicción en formato "YYYY-MM-DD HH:MM".
+2. La API verifica que la fecha y hora estén en el formato correcto y que los minutos sean múltiplos de 10. Si no es así, redondea los minutos al múltiplo de 10 superior.
+3. La API utiliza el modelo TCN entrenado previamente y el objeto `PowerPredictor` para realizar la predicción de la energía eólica para la fecha y hora especificada.
+4. La API devuelve la predicción en formato JSON con la siguiente estructura:
+
+```json
+[
+    {'ds': '2020-03-31 00:00', 'ActivePower': -366.71939457844417},
+    {'ds': '2020-03-31 00:10', 'ActivePower': -144.11230095788068},
+    {'ds': '2020-03-31 00:20', 'ActivePower': 625.2472260190992},
+    {'ds': '2020-03-31 00:30', 'ActivePower': 1735.9998637433953},
+    {'ds': '2020-03-31 00:40', 'ActivePower': 2983.776382668153}
+]
+```
 ### Tests
+
+Se crearon tests para probar los scripts `train/preprocess.py`, `train/trainer.py`, `train/predict.py` y `api/main.py`. Se pueden correr todos los tests con el siguiente comando en consola:
 
 ```bash
 python -m unittest discover tests/
@@ -135,6 +153,18 @@ python -m unittest discover tests/
 
 ### Docker
 
+La API se puede inicializar de dos maneras:
+
+1. Ejecutar el archivo `main.py`para probar la API. No se recomienda este método para poner la API en producción.
+
+2. Ejecutar la API a través de Docker con `uvicorn`. Para ello se debe crear el container y luego ejecutar.
+
 ```bash
 docker build -t energy-api .
+```
+
+Correr el container:
+
+```
+docker run -p 8282:8282 energy-api
 ```
