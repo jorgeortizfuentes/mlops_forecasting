@@ -4,28 +4,26 @@ Autor: Jorge Luis Ortiz-Fuentes
 
 ## Descripción
 
-Este es un desafío de aprendizaje automático de dos partes. Primero, se entrenaron modelos para predecir la energía producida por un aerogenerador dadas ciertas variables. En la segunda parte, se construyó una API para que el modelo esté disponible en línea.
+Este es un desafío de aprendizaje automático de dos partes. Primero, se entrenaron modelos para predecir la energía producida por un generador eólico dadas ciertas variables. En la segunda parte, se construyó una API para que el modelo esté disponible en línea.
 
-## Hardware y versiones
+## Hardware y software
 
-Este código se diseñó y se testeó usando Python 3.8.16 en una máquina con Ubuntu 22.04 con 2 GPU NVIDIA RTX A6000.
+Este código se diseñó y se testeó usando Python 3.8.16 en una máquina con Ubuntu 22.04 con 2 GPU NVIDIA RTX A6000. Los paquetes de Python necesarios se encuentran en el archivo `requirements.txt`.
 
 ## Parte 1: Entrenamiento
 
-En esta parte del desafío se debe escribir código para entrenar y preparar un modelo de aprendizaje automático que permita predecir la energía producida por un aerogenerador dadas ciertas variables.
-
 ### Datos
 
-El conjunto de datos utilizado en este desafío se encuentra en `./data/wind_power_generation.csv`. Este conjunto de datos contiene varias variables meteorológicas, de rotor y de turbina. Los datos se registraron desde enero de 2018 hasta marzo de 2020 en intervalos de 10 minutos.
+El dataset utilizado en este desafío se encuentra en `./data/wind_power_generation.csv`. Este dataset contiene varias variables meteorológicas, de rotor y de turbina. Los datos se registraron desde enero de 2018 hasta marzo de 2020 en intervalos de 10 minutos, con algunos vacíos entremedio.
 
-### Tarea
+### Tareas
 
-- Crear y entrenar un modelo de aprendizaje automático para predecir la `potencia activa` (y se pueden proporcionar otras columnas como variables de entrada).
-- Operacionalizar el entrenamiento.
+- Crear y entrenar un modelo de aprendizaje automático para predecir la `potencia activa`
+- Operacionalizar el entrenamiento a través de scripts
 
 ## Experimentos
 
-En paralelo al desarrollo del código, se crearon `Jupyter Notebooks` para explorar el dataset, probar clasificadores y hacer inferencias.
+Se crearon `Jupyter Notebooks` para explorar el dataset, probar clasificadores y hacer inferencias, mientras se desarrollaban los scripts para operacionalizar el entrenamiento.
 
 ## Organización del código y patrones de diseño
 
@@ -41,15 +39,15 @@ El módulo `trainer.py` se encarga de entrenar el modelo con los mejores hiperpa
 
 El módulo `predict.py` se encarga de cargar el modelo entrenado y realizar predicciones.
 
-Se ha utilizado la biblioteca Darts para implementar el modelo de predicción y PyTorch Lightning para su entrenamiento.
-
 Se ha utilizado el patrón "Inyección de Dependencias" para inyectar las dependencias necesarias en cada módulo y hacerlos más independientes y fáciles de testear.
 
-Se ha utilizado la biblioteca Optuna para realizar una búsqueda de hiperparámetros y la biblioteca Plotly para visualizar los resultados de la búsqueda.
+Se han utilizado los paquetes Darts y PyTorch Lightning para implementar los modelos predictivos.
+
+Se ha utilizado la biblioteca Optuna para realizar una búsqueda de hiperparámetros mediante técnicas bayesianas.
 
 ### Preprocesamiento de los datos
 
-El preprocesamiento de datos es una etapa fundamental para realizar predicciones, ya que permite asegurarse de que los datos estén limpios, completos y estructurados de manera adecuada para poder ser utilizados en la tareas de modelado. En este caso, se han utilizado los siguientes métodos de preprocesamiento:
+El preprocesamiento de datos fue una etapa fundamental para realizar las predicciones. Este se realizó a partir de la exploración del notebook `1. Explore dataset.ipynb` para asegurarse de que los datos estén limpios, completos y estructurados de manera adecuada para poder ser utilizados en la tareas de modelado. En este caso, se han utilizado los siguientes métodos de preprocesamiento:
 
 #### Convertir fechas
 
@@ -65,7 +63,7 @@ Se han eliminado las columnas "Blade3PitchAngle" y "WindDirection", ya que conti
 
 ## Clasificadores
 
-Para este desafío se probaron 5 técnicas para realizar predicciones multivariadas:
+Para este desafío, se probaron 5 técnicas para realizar predicciones multivariadas en `2. Test models.ipynb`:
 
 - TCN (Temporal Convolutional Network): es una red neuronal convolucional que se utiliza para analizar series de tiempo y realizar predicciones.
 
@@ -103,7 +101,7 @@ Para entrenar el modelo final, se utilizó una búsqueda de hiperparámetros con
 
 Todas las combinaciones de hiperparámetros y las métricas obtenidas se guardaron en el archivo `hyperparameters_results.csv`. Estos valores son utilizados posteriormente para el entrenamiento del modelo final.
 
-El mejor modelo obtuvo de resultado 461.65 de `RMSE`.
+Tras la optimización de los hiperparámetros, el mejor modelo obtuvo un resultado de 461.65 `RMSE`.
 
 ## Entrenamiento final
 
@@ -117,13 +115,13 @@ El código para hacer inferencias se encuentra en el archivo `predict.py`. Este 
 
 La clase `PowerPredictor` tiene dos métodos:
 
-1. `get_time_position`: Este método se encarga de calcular la cantidad de predicciones que se deben hacer, basándose en la fecha de la última predicción del modelo y la fecha de la predicción que se quiere hacer. Retorna el número de predicciones a hacer.
+`get_time_position`: Este método se encarga de calcular la cantidad de predicciones que se deben hacer, basándose en la fecha de la última predicción del modelo y la fecha de la predicción que se quiere hacer. Retorna el número de predicciones a hacer.
 
-32 `predict_power_output`: Este método se encarga de hacer las predicciones de la salida de energía. Recibe como parámetro la fecha para la cual se quiere hacer la predicción. Primero, se llama al método `get_time_position` para saber cuántas predicciones hacer. Luego, se hace la predicción llamando al método `predict` del modelo cargado en el objeto `PowerPredictor`. Finalmente, se convierte el resultado a un diccionario y se retorna.
+`predict_power_output`: Este método se encarga de hacer las predicciones de la salida de energía. Recibe como parámetro la fecha para la cual se quiere hacer la predicción. Primero, se llama al método `get_time_position` para saber cuántas predicciones hacer. Luego, se hace la predicción llamando al método `predict` del modelo cargado en el objeto `PowerPredictor`. Finalmente, se convierte el resultado a un diccionario y se retorna.
 
 El código incluye un ejemplo de uso al final del archivo. En este ejemplo, se crea un objeto `PowerPredictor` y se hace una predicción para una fecha determinada. El resultado se imprime en la consola.
 
-### Limitación de las inferencias
+### Limitaciones de las inferencias
 
 El modelo solo logra predecir 887 predicciones en intervalos cada 10 minutos. Por lo tanto, el modelo solo permite realizar inferencias entre 2020-03-30 23:50:00 (última fecha del dataset de entrenamiento) y 2020-04-06 03:40.
 ## Parte 2: API
