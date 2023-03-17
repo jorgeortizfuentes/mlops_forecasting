@@ -125,7 +125,8 @@ El código incluye un ejemplo de uso al final del archivo. En este ejemplo, se c
 
 ### Limitaciones de las inferencias
 
-El modelo solo logra predecir 887 predicciones en intervalos cada 10 minutos. Por lo tanto, el modelo solo permite realizar inferencias entre 2020-03-30 23:50:00 (última fecha del dataset de entrenamiento) y 2020-04-06 03:40.
+El modelo solo genera buenas predicciones en intervalos cada 10 minutos hasta 5 días desde la fecha de entrenamiento. Luego, genera resultados que probablemente no se ajustan con la realidad.
+
 ## Parte 2: API
 
 En esta parte, se construyó una API REST con FastAPI para disponibilizar el modelo en línea. Se prefirió este framework en comparación a Django y Flask por su mayor rendimiento, facilidad de uso y su posibilidad de escalabilidad.

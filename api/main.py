@@ -22,9 +22,9 @@ app = FastAPI()
 @app.get("/predict/{date}")
 def predict(date: str):
     """
-    Predict the wind power generation from the last date of the training data (2020-03-30 23:50:00) to the date indicated. 
+    Predict the wind power generation from the last date of the training data (2020-03-30 23:50) to the date indicated. 
 
-    DISCLAIMER: The model can only predict 887 predictions at 10-minute intervals. Therefore, the model only allows inferences between 2020-03-30 23:50:00 (last date of the training dataset) and 2020-04-06 03:40.
+    DISCLAIMER: Tend to fail predictions beyond 5 days from the last day of the training dataset.
 
     Args:
         date (str): Tte datetime for which to make predictions (format: "YYYY-MM-DD HH:MM").
