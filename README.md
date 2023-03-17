@@ -121,6 +121,9 @@ La clase `PowerPredictor` tiene dos métodos:
 
 El código incluye un ejemplo de uso al final del archivo. En este ejemplo, se crea un objeto `PowerPredictor` y se hace una predicción para una fecha determinada. El resultado se imprime en la consola.
 
+### Limitación de las inferencias
+
+El modelo solo logra predecir 887 predicciones en intervalos cada 10 minutos. Por lo tanto, el modelo solo permite realizar inferencias entre 2020-03-30 23:50:00 (última fecha del dataset de entrenamiento) y 2020-04-06 03:40.
 ## Parte 2: API
 
 En esta parte, se construyó una API REST con FastAPI para disponibilizar el modelo en línea.
@@ -169,3 +172,27 @@ Correr el container:
 ```
 docker run -p 8282:8282 energy-api
 ```
+
+Realiza una petición GET a la siguiente URL: "http://localhost:8282/predict/{fecha y hora}" (sustituye "{fecha y hora}" por la fecha y hora en formato "YYYY-MM-DD HH:MM"). La API devolverá un JSON con la predicción de la producción de energía correspondiente a la fecha y hora especificadas.
+
+Por ejemplo, si quieres predecir la producción de energía para el 31 de marzo de 2020 a las 04:50, deberás hacer una petición GET de la siguiente forma "2020-03-31 04:50".
+
+Disclaimer: considerar la limitación presentada en la sección de Inferencias.
+
+## Posibles mejoras
+
+A continuación, se presentan algunas ideas de trabajo futuro para seguir mejorando el modelo y el deployment:
+
+- Experimentar con diferentes técnicas de preprocesamiento de datos y ver cómo afectan el rendimiento del modelo.
+
+- Probar con diferentes hiperparámetros en los modelos en los modelos de RNN, LSTM y GRU.
+
+- Utilizar una arquitectura de microservicios para desplegar la API en varios servidores y mejorar su escalabilidad.
+
+- Utilizar técnicas de optimización de modelos en línea para actualizar el modelo de manera continua a medida que se obtienen nuevos datos.
+
+- Utilizar caching para almacenar en caché los resultados de las consultas a la API. Esto puede mejorar significativamente el rendimiento de la API al reducir el número de consultas que deben realizarse al modelo para las mismas entradas.
+
+- Implementar una base de datos para guardar las predicciones y los datos de entrenamiento en lugar de cargar los datos directamente en la memoria.
+
+- Entrenar el modelo con un `output_chunk_length` superior para permitirle al modelo predecir un periodo más extenso en el futuro.
