@@ -132,3 +132,9 @@ En esta parte, se construyó una API REST con FastAPI para disponibilizar el mod
 ```bash
 python -m unittest discover tests/
 ```
+
+### Docker
+
+```bash
+docker build -t energy-api .
+```

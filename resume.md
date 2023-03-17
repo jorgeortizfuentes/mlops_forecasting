@@ -1,3 +1,21 @@
+
+
+[/home/jlortiz/awto_mle_challenge/requirements.txt]
+```python
+pytorch-lightning>=1.5.0
+ipywidgets
+pandas
+matplotlib
+plotly
+nbformat
+darts
+tabulate
+optuna
+uvicorn
+fastapi
+httpx
+```
+
 [/home/jlortiz/awto_mle_challenge/api/main.py]
 ```python
 from datetime import datetime
@@ -402,5 +420,6 @@ if __name__ == "__main__":
 22,62,10,181,18,0.4382724076914072,564.2331589041639,377.56056949090356
 23,82,7,161,17,0.3644709676228632,579.6345165050499,387.2230573749557
 24,98,9,225,19,0.3038186209805563,540.8035586004462,363.42714649427546
+25,98,9,234,17,0.2875097897339544,595.4446125667002,398.36206185596745
 
 ```
