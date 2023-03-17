@@ -22,13 +22,15 @@ app = FastAPI()
 @app.get("/predict/{date}")
 def predict(date: str):
     """
-    Predicts the power output for a given datetime.
+    Predict the wind power generation from the last date of the training data (2020-03-30 23:50:00) to the date indicated. 
+
+    DISCLAIMER: The model can only predict 887 predictions at 10-minute intervals. Therefore, the model only allows inferences between 2020-03-30 23:50:00 (last date of the training dataset) and 2020-04-06 03:40.
 
     Args:
-        date (str): The datetime for which to make predictions (format: "YYYY-MM-DD HH:MM").
+        date (str): Tte datetime for which to make predictions (format: "YYYY-MM-DD HH:MM").
 
     Returns:
-        dict: A dictionary with the predicted power output.
+        dict: the predicted wind power output.
     """
     # Check if date is in %Y-%m-%d %H:%M format
     try:
