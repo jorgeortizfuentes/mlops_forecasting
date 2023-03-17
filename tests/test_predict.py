@@ -1,13 +1,13 @@
-import unittest
+from datetime import datetime
 import os
 import sys
+import unittest
 
 current_dir = os.getcwd()
 scripts_dir = os.path.join(current_dir, "train")
 sys.path.append(scripts_dir)
 
 from predict import PowerPredictor
-from datetime import datetime
 
 
 class TestPowerPredictor(unittest.TestCase):
@@ -29,5 +29,6 @@ class TestPowerPredictor(unittest.TestCase):
         self.assertIsInstance(output[0]["ActivePower"], float)
         self.assertEqual(output[-1]["ds"], self.date_str)
 
-if __name__ == '__main__':
+
+if __name__ == "__main__":
     unittest.main()

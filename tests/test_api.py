@@ -1,6 +1,6 @@
-import unittest
 import os
 import sys
+import unittest
 
 current_dir = os.getcwd()
 scripts_dir = os.path.join(current_dir, "api")
@@ -10,6 +10,7 @@ from fastapi.testclient import TestClient
 from main import app
 
 client = TestClient(app)
+
 
 class TestMain(unittest.TestCase):
     def test_predict_success(self):
@@ -22,6 +23,7 @@ class TestMain(unittest.TestCase):
         response = client.get("/predict/2021-04-01")
         self.assertEqual(response.status_code, 200)
         self.assertIn("error", response.json())
+
 
 if __name__ == "__main__":
     unittest.main()

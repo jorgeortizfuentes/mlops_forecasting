@@ -16,7 +16,6 @@ EXPOSE 8282
 # Run tests when the image is built (python -m unittest discover tests/)
 RUN python -m unittest discover tests/
 
-# Run main.py when the container launches (app/api/main.py)
-CMD ["uvicorn", "api.main:awto_mle_challenge", "--host", "0.0.0.0", "--port", "8282"]
-
-# 9 6.453 FileNotFoundError: [Errno 2] No such file or directory: '/app/awto_mle_challenge/data/wind_power_generation.csv'
+# Run main.py when the container launches (awto_mle_challenge/api/main.py)
+CMD ["uvicorn", "api.main:app", "--host", "0.0.0.0", "--port", "8282"]
+# uvicorn api.main:app --host 0.0.0.0 --port 8282

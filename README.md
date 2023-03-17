@@ -25,17 +25,17 @@ El conjunto de datos utilizado en este desafío se encuentra en `./data/wind_pow
 
 ## Experimentos
 
-En paralelo al desarrollo del código, se crearon `Jupyter Notebooks` para explorar el dataset, probar clasificadores y hacer inferencias. 
+En paralelo al desarrollo del código, se crearon `Jupyter Notebooks` para explorar el dataset, probar clasificadores y hacer inferencias.
 
 ## Organización del código y patrones de diseño
 
-La organización del código sigue una estructura de paquetes en la que se separan los módulos de entrenamiento, prediccion, preprocesamiento y búsqueda de hiperparámetros. 
+La organización del código sigue una estructura de paquetes en la que se separan los módulos de entrenamiento, prediccion, preprocesamiento y búsqueda de hiperparámetros.
 
-Se ha utilizado el patrón "Single Responsibility Principle" para separar las responsabilidades de cada módulo. 
+Se ha utilizado el patrón "Single Responsibility Principle" para separar las responsabilidades de cada módulo.
 
-El módulo `preprocess.py` se encarga de preprocesar los datos en bruto obtenidos en el archivo `wind_power_generation.csv`. 
+El módulo `preprocess.py` se encarga de preprocesar los datos en bruto obtenidos en el archivo `wind_power_generation.csv`.
 
-El módulo `search_hyperparameters.py` se encarga de realizar una búsqueda de hiperparámetros utilizando la biblioteca Optuna. 
+El módulo `search_hyperparameters.py` se encarga de realizar una búsqueda de hiperparámetros utilizando la biblioteca Optuna.
 
 El módulo `trainer.py` se encarga de entrenar el modelo con los mejores hiperparámetros encontrados en la búsqueda de hiperparámetros y guardar el modelo entrenado.
 
@@ -49,7 +49,7 @@ Se ha utilizado la biblioteca Optuna para realizar una búsqueda de hiperparáme
 
 ### Preprocesamiento de los datos
 
-El preprocesamiento de datos es una etapa fundamental para realizar predicciones, ya que permite asegurarse de que los datos estén limpios, completos y estructurados de manera adecuada para poder ser utilizados en la tareas de modelado.  En este caso, se han utilizado los siguientes métodos de preprocesamiento:
+El preprocesamiento de datos es una etapa fundamental para realizar predicciones, ya que permite asegurarse de que los datos estén limpios, completos y estructurados de manera adecuada para poder ser utilizados en la tareas de modelado. En este caso, se han utilizado los siguientes métodos de preprocesamiento:
 
 #### Convertir fechas
 
@@ -67,25 +67,25 @@ Se han eliminado las columnas "Blade3PitchAngle" y "WindDirection", ya que conti
 
 Para este desafío se probaron 5 técnicas para realizar predicciones multivariadas:
 
-* TCN (Temporal Convolutional Network): es una red neuronal convolucional que se utiliza para analizar series de tiempo y realizar predicciones. 
+- TCN (Temporal Convolutional Network): es una red neuronal convolucional que se utiliza para analizar series de tiempo y realizar predicciones.
 
-* XGBModel (XGBoost): es un modelo de aprendizaje de conjunto que utiliza árboles de decisión para realizar predicciones. 
+- XGBModel (XGBoost): es un modelo de aprendizaje de conjunto que utiliza árboles de decisión para realizar predicciones.
 
-* RNNModel (Recurrent Neural Network): es una red neuronal que se utiliza para analizar secuencias y series de tiempo, y realizar predicciones. 
+- RNNModel (Recurrent Neural Network): es una red neuronal que se utiliza para analizar secuencias y series de tiempo, y realizar predicciones.
 
-* LSTM (Long Short-Term Memory): es una variante de las redes neuronales recurrentes que se utiliza para analizar secuencias y series de tiempo, y realizar predicciones. 
+- LSTM (Long Short-Term Memory): es una variante de las redes neuronales recurrentes que se utiliza para analizar secuencias y series de tiempo, y realizar predicciones.
 
-* GRU (Gated Recurrent Unit): es otra variante de las redes neuronales recurrentes que se utiliza para analizar secuencias y series de tiempo, y realizar predicciones.
+- GRU (Gated Recurrent Unit): es otra variante de las redes neuronales recurrentes que se utiliza para analizar secuencias y series de tiempo, y realizar predicciones.
 
 Los resultados se presentan en la siguiente tabla.
 
-| model     | mae        | rmse        |
-| --------- | ----------| -----------|
-| TCN       | 347.733438| 505.100243 |
-| XGBModel  | 668.633280| 774.615943 |
-| RNNModel  | 403.156471| 602.109330 |
-| LSTM      | 403.189509| 602.155056 |
-| GRU       | 415.720545| 615.308414 |
+| model    | mae        | rmse       |
+| -------- | ---------- | ---------- |
+| TCN      | 347.733438 | 505.100243 |
+| XGBModel | 668.633280 | 774.615943 |
+| RNNModel | 403.156471 | 602.109330 |
+| LSTM     | 403.189509 | 602.155056 |
+| GRU      | 415.720545 | 615.308414 |
 
 ## Métricas
 
@@ -97,9 +97,9 @@ El RMSE es similar a la MAE, pero tiene en cuenta la magnitud de los errores al 
 
 ## Optimización de hiperparámetros
 
-A partir de los experimentos realizados en los notebooks se observó que el modelo que entregó mejores resultados fue TCN. Este modelo utiliza capas convolucionales 1D para procesar secuencias de datos en una ventana de tiempo, lo que permite capturar patrones a diferentes escalas de tiempo en una serie de tiempo. Además, el modelo utiliza una técnica conocida como dilatación causal, que permite aumentar el tamaño efectivo de la ventana de tiempo que se procesa mientras se mantiene el mismo tamaño de ventana de tiempo en las capas convolucionales. 
+A partir de los experimentos realizados en los notebooks se observó que el modelo que entregó mejores resultados fue TCN. Este modelo utiliza capas convolucionales 1D para procesar secuencias de datos en una ventana de tiempo, lo que permite capturar patrones a diferentes escalas de tiempo en una serie de tiempo. Además, el modelo utiliza una técnica conocida como dilatación causal, que permite aumentar el tamaño efectivo de la ventana de tiempo que se procesa mientras se mantiene el mismo tamaño de ventana de tiempo en las capas convolucionales.
 
-Para entrenar el modelo final, se utilizó una búsqueda de hiperparámetros con la biblioteca Optuna, que utiliza técnicas bayesianas para optimizar la búsqueda de las mejores métricas. Esto permitió encontrar la combinación óptima de hiperparámetros para minimizar el error de predicción RMSE en un conjunto de validación. Los hiperparámetros que se optimizaron fueron: la longitud de la ventana de entrada, el número de capas convolucionales, el número de filtros en cada capa, el dropout y el número de épocas de entrenamiento. 
+Para entrenar el modelo final, se utilizó una búsqueda de hiperparámetros con la biblioteca Optuna, que utiliza técnicas bayesianas para optimizar la búsqueda de las mejores métricas. Esto permitió encontrar la combinación óptima de hiperparámetros para minimizar el error de predicción RMSE en un conjunto de validación. Los hiperparámetros que se optimizaron fueron: la longitud de la ventana de entrada, el número de capas convolucionales, el número de filtros en cada capa, el dropout y el número de épocas de entrenamiento.
 
 Todas las combinaciones de hiperparámetros y las métricas obtenidas se guardaron en el archivo `hyperparameters_results.csv`. Estos valores son utilizados posteriormente para el entrenamiento del modelo final.
 
@@ -136,13 +136,14 @@ La API de predicción de energía eólica funciona de la siguiente manera:
 
 ```json
 [
-    {'ds': '2020-03-31 00:00', 'ActivePower': -366.71939457844417},
-    {'ds': '2020-03-31 00:10', 'ActivePower': -144.11230095788068},
-    {'ds': '2020-03-31 00:20', 'ActivePower': 625.2472260190992},
-    {'ds': '2020-03-31 00:30', 'ActivePower': 1735.9998637433953},
-    {'ds': '2020-03-31 00:40', 'ActivePower': 2983.776382668153}
+  { "ds": "2020-03-31 00:00", "ActivePower": -366.71939457844417 },
+  { "ds": "2020-03-31 00:10", "ActivePower": -144.11230095788068 },
+  { "ds": "2020-03-31 00:20", "ActivePower": 625.2472260190992 },
+  { "ds": "2020-03-31 00:30", "ActivePower": 1735.9998637433953 },
+  { "ds": "2020-03-31 00:40", "ActivePower": 2983.776382668153 }
 ]
 ```
+
 ### Tests
 
 Se crearon tests para probar los scripts `train/preprocess.py`, `train/trainer.py`, `train/predict.py` y `api/main.py`. Se pueden correr todos los tests con el siguiente comando en consola:

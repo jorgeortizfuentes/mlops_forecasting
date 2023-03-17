@@ -6,7 +6,6 @@ import sys
 
 # Add scripts directory to path
 if os.getcwd().endswith("api"):
-    print("hola")
     current_dir = os.getcwd()
     scripts_dir = current_dir.replace("api", "train")
 else:
