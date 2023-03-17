@@ -9,3 +9,4 @@ tabulate
 optuna
 uvicorn
 fastapi
+httpx

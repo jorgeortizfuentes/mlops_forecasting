@@ -6,7 +6,7 @@ Autor: Jorge Luis Ortiz-Fuentes
 
 Este es un desafío de aprendizaje automático de dos partes. Primero, se entrenaron modelos para predecir la energía producida por un aerogenerador dadas ciertas variables. En la segunda parte, se construyó una API para que el modelo esté disponible en línea.
 
-# Hardware y versiones
+## Hardware y versiones
 
 Este código se diseñó y se testeó usando Python 3.8.16 en una máquina con Ubuntu 22.04 con 2 GPU NVIDIA RTX A6000.
 
@@ -123,4 +123,12 @@ El código incluye un ejemplo de uso al final del archivo. En este ejemplo, se c
 
 ## Parte 2: API
 
-En esta parte, se construyó una API REST para disponibilizar el modelo en línea.
+En esta parte, se construyó una API REST con FastAPI para disponibilizar el modelo en línea
+
+## Uso
+
+### Tests
+
+```bash
+python -m unittest discover tests/
+```
