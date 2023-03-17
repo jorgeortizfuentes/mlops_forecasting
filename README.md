@@ -103,6 +103,8 @@ Para entrenar el modelo final, se utilizó una búsqueda de hiperparámetros con
 
 Todas las combinaciones de hiperparámetros y las métricas obtenidas se guardaron en el archivo `hyperparameters_results.csv`. Estos valores son utilizados posteriormente para el entrenamiento del modelo final.
 
+El mejor modelo obtuvo de resultado 461.65 de `RMSE`.
+
 ## Entrenamiento final
 
 El archivo `train.py` contiene la clase Trainer, que se encarga de cargar, preprocesar y entrenar los datos utilizando un modelo TCN (Temporal Convolutional Network) de la librería Darts. También se encarga de guardar el modelo entrenado y su información en una carpeta especificada en el archivo `config.py`.
@@ -126,7 +128,7 @@ El código incluye un ejemplo de uso al final del archivo. En este ejemplo, se c
 El modelo solo logra predecir 887 predicciones en intervalos cada 10 minutos. Por lo tanto, el modelo solo permite realizar inferencias entre 2020-03-30 23:50:00 (última fecha del dataset de entrenamiento) y 2020-04-06 03:40.
 ## Parte 2: API
 
-En esta parte, se construyó una API REST con FastAPI para disponibilizar el modelo en línea.
+En esta parte, se construyó una API REST con FastAPI para disponibilizar el modelo en línea. Se prefirió este framework en comparación a Django y Flask por su mayor rendimiento, facilidad de uso y su posibilidad de escalabilidad.
 
 ## Uso
 
