@@ -55,7 +55,7 @@ class Trainer:
         self.get_best_hyperparameters()
         self.model = TCNModel(
             input_chunk_length=int(self.hyperparameters["input_chunk_length"]),
-            output_chunk_length=6*5,
+            output_chunk_length=72,
             n_epochs=int(self.hyperparameters["n_epochs"]),
             num_layers=int(self.hyperparameters["num_layers"]),
             num_filters=int(self.hyperparameters["num_filters"]),
@@ -85,7 +85,7 @@ class Trainer:
             "mae_score": self.hyperparameters["mae_score"],
             "trained_date": self.current_time,
             "input_chunk_length": int(self.hyperparameters["input_chunk_length"]),
-            "output_chunk_length": 1,
+            "output_chunk_length": 80,
             "n_epochs": int(self.hyperparameters["n_epochs"]),
             "num_layers": int(self.hyperparameters["num_layers"]),
             "num_filters": int(self.hyperparameters["num_filters"]),

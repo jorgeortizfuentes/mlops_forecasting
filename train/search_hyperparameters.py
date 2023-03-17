@@ -20,20 +20,20 @@ series = TimeSeries.from_dataframe(df,
                                    )
 
 # Split the series into train and eval
-train, val = series.split_before(0.8)
+train, val = series.split_before(0.7)
 results = []
 # Define the objective function to optimize
 def objective(trial):
     # Define the hyperparameters to search over
-    input_chunk_length = trial.suggest_int('input_chunk_length', 80, 80*4)
+    input_chunk_length = trial.suggest_int('input_chunk_length', 72, 72*5)
     num_layers = trial.suggest_int('num_layers', 6, 12)
     num_filters = trial.suggest_int('num_filters', 8, 256)
     n_epochs = trial.suggest_int('n_epochs', 5, 20) # 5 y 20
-    dropout = trial.suggest_loguniform('dropout', 0.01, 0.5)
+    dropout = trial.suggest_loguniform('dropout', 0.001, 0.5)
 
     # Create the TCN model with the current hyperparameters
     model = TCNModel(input_chunk_length=input_chunk_length,
-                     output_chunk_length=80,
+                     output_chunk_length=72,
                      num_layers=num_layers,
                      num_filters=num_filters,
                      n_epochs=n_epochs,
