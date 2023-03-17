@@ -55,7 +55,7 @@ class Trainer:
         self.get_best_hyperparameters()
         self.model = TCNModel(
             input_chunk_length=int(self.hyperparameters["input_chunk_length"]),
-            output_chunk_length=1,
+            output_chunk_length=6*5,
             n_epochs=int(self.hyperparameters["n_epochs"]),
             num_layers=int(self.hyperparameters["num_layers"]),
             num_filters=int(self.hyperparameters["num_filters"]),
