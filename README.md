@@ -80,12 +80,12 @@ Para este desafío, se probaron 5 técnicas para realizar predicciones multivari
 Los resultados se presentan en la siguiente tabla.
 
 | model    | mae        | rmse       |
-| -------- | ---------- | ---------- |
-| TCN      | 347.733438 | 505.100243 |
-| XGBModel | 668.633280 | 774.615943 |
-| RNNModel | 403.156471 | 602.109330 |
-| LSTM     | 403.189509 | 602.155056 |
-| GRU      | 415.720545 | 615.308414 |
+|----------|------------|------------|
+| TCN      | 381.861490 | 569.296836 |
+| XGBModel | 1413.191800| 1531.923404|
+| RNNModel | 414.779924 | 614.625464 |
+| LSTM     | 402.926162 | 601.793033 |
+| GRU      | 415.882181 | 615.402254 |
 
 ## Métricas
 
@@ -164,23 +164,24 @@ La API se puede inicializar de dos maneras:
 
 1. Ejecutar el archivo `main.py`para probar la API. No se recomienda este método para poner la API en producción.
 
-2. Ejecutar la API a través de Docker con `uvicorn`. Para ello se debe crear el container y luego ejecutar.
+2. Ejecutar la API a través de Docker con `uvicorn`. Para ello se debe crear el container con el siguiente comando en consola:
 
 ```bash
 docker build -t energy-api .
 ```
 
-Correr el container:
+Esto construye un container en un ambiente de Python 3.8.16, copia los archivos necesarios, instala las dependencias y ejecuta los tests para comprobar que la API funcionará sin problemas. 
+
+Luego, se debe ejecutar el container en el puerto 8282:
 
 ```
 docker run -p 8282:8282 energy-api
 ```
 
-Realiza una petición GET a la siguiente URL: "http://localhost:8282/predict/{fecha y hora}" (sustituye "{fecha y hora}" por la fecha y hora en formato "YYYY-MM-DD HH:MM"). La API devolverá un JSON con la predicción de la producción de energía correspondiente a la fecha y hora especificadas.
+Una vez lanzado Docker, se puede realizar una petición GET a la siguiente URL: "http://localhost:8282/predict/{fecha y hora}" (sustituye "{fecha y hora}" por la fecha y hora en formato "YYYY-MM-DD HH:MM"). La API devolverá un JSON con la predicción de la producción de energía correspondiente a la fecha y hora especificadas.
 
 Por ejemplo, si quieres predecir la producción de energía para el 31 de marzo de 2020 a las 04:50, deberás hacer una petición GET de la siguiente forma "2020-03-31 04:50".
 
-Disclaimer: considerar la limitación presentada en la sección de Inferencias.
 
 ## Posibles mejoras
 
