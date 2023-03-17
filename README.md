@@ -2,9 +2,11 @@
 
 Autor: Jorge Luis Ortiz-Fuentes
 
-## Descripción
+## Resumen
 
 Este es un desafío de aprendizaje automático de dos partes. Primero, se entrenaron modelos para predecir la energía producida por un generador eólico dadas ciertas variables. En la segunda parte, se construyó una API para que el modelo esté disponible en línea.
+
+Puedes ver la API funcionando en el siguiente enlace: [https://awto.ortizfuentes.com/docs#/default/predict_predict__date__get](https://awto.ortizfuentes.com/docs#/default/predict_predict__date__get)
 
 ## Hardware y software
 
