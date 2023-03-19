@@ -6,7 +6,7 @@ Autor: Jorge Luis Ortiz-Fuentes
 
 Este es un desafío de aprendizaje automático de dos partes. Primero, se entrenaron modelos para predecir la energía producida por un generador eólico dadas ciertas variables. En la segunda parte, se construyó una API para que el modelo esté disponible en línea. En la tercera parte, se explica cómo se puso en producción la API a través de Integración Continua y Entrega Continua (CI/CD).
 
-Puedes ver la API funcionando en el siguiente enlace: [https://awto.ortizfuentes.com/docs#/default/predict_predict__date__get](https://awto.ortizfuentes.com/docs#/default/predict_predict__date__get)
+Puedes ver la API funcionando en el siguiente enlace: [API en producción](https://awto.ortizfuentes.com/docs#/default/predict_predict__date__get)
 
 ## Hardware y software
 
@@ -158,7 +158,7 @@ Se crearon tests para probar los scripts `train/preprocess.py`, `train/trainer.p
 python -m unittest discover tests/
 ```
 
-## CI/CD de la API
+## Parte 3: CI/CD de la API
 
 ### Dockerización y lanzamiento de la API
 
