@@ -4,13 +4,15 @@ Autor: Jorge Luis Ortiz-Fuentes
 
 ## Resumen
 
-Este es un desafío de aprendizaje automático de dos partes. Primero, se entrenaron modelos para predecir la energía producida por un generador eólico dadas ciertas variables. En la segunda parte, se construyó una API para que el modelo esté disponible en línea. En la tercera parte, se explica cómo se puso en producción la API a través de Integración Continua y Entrega Continua (CI/CD).
+En este desafío se entrenaron modelos para predecir la energía producida por un generador eólico dadas ciertas variables. Luego, se construyó una API para que el modelo esté disponible en línea. Finalmente se puso en producción la API a través de Integración y Entrega Continua (CI/CD).
 
 Puedes ver la API funcionando en el siguiente enlace: [API en producción](https://awto.ortizfuentes.com/docs#/default/predict_predict__date__get)
 
 ## Hardware y software
 
 Este código se diseñó y se testeó usando Python 3.8.16 en una máquina con Ubuntu 22.04 con 2 GPU NVIDIA RTX A6000. Los paquetes de Python necesarios se encuentran en el archivo `requirements.txt`.
+
+La API en producción se encuentra en una máquina virtual de 2 GB de ram y 2 CPU.
 
 ## Parte 1: Entrenamiento
 
@@ -182,11 +184,7 @@ Por ejemplo, si quieres predecir la producción de energía para el 31 de marzo 
 
 ### CI/CD
 
-Con el objetivo de implementar la API en producción y asegurar su continuidad operativa, se han establecido dos flujos de trabajo a través de GitHub Actions.
-
-1. El primer flujo ejecuta automáticamente los tests y verifica la seguridad de los paquetes antes de cada push.
-
-2. El segundo flujo actualiza automáticamente la imagen Docker en el servidor de producción cada vez que se realiza un push, y si los tests pasan, la imagen se ejecuta en producción.
+Con el objetivo de implementar la API en producción y asegurar su continuidad operativa, se ha establecido un flujo a través de GitHub Actions. El flujo de trabajo actualiza automáticamente la imagen Docker en el servidor de producción cada vez que se realiza un push, y si los tests pasan, la imagen se ejecuta en producción.
 
 ## Posibles mejoras
 
@@ -194,7 +192,7 @@ A continuación, se presentan algunas ideas de trabajo futuro para seguir mejora
 
 - Experimentar con diferentes técnicas de preprocesamiento de datos y ver cómo afectan el rendimiento del modelo.
 
-- Probar con diferentes hiperparámetros en los modelos en los modelos de RNN, LSTM y GRU.
+- Probar con diferentes hiperparámetros en los modelos en los modelos de RNN, LSTM y GRU. 
 
 - Utilizar una arquitectura de microservicios para desplegar la API en varios servidores y mejorar su escalabilidad.
 
