@@ -10,4 +10,3 @@ optuna==3.1.0
 uvicorn==0.21.1
 fastapi==0.94.1
 httpx==0.23.3
-fklake8=6.0.0

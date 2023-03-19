@@ -1,21 +1,21 @@
-# name: Docker Image CI
+name: Docker Image CI
 
-# on:
-#   push:
-#     branches: [ "main" ]
-#   pull_request:
-#     branches: [ "main" ]
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
 
-# jobs:
+jobs:
 
-#   build:
-#     runs-on: ubuntu-latest
+  build:
+    runs-on: ubuntu-latest
 
-#     steps:
-#     - uses: actions/checkout@v3
-#     - name: Build and run the Docker image
-#     # Build image with docker-compose up and then run it and next restart
-#       run: |      
-#         docker-compose build
-#         docker-compose up -d --remove-orphans
-#         docker-compose ps
+    steps:
+    - uses: actions/checkout@v3
+    - name: Build and run the Docker image
+    # Build image with docker-compose up and then run it and next restart
+      run: |      
+        docker-compose build
+        docker-compose up -d --remove-orphans
+        docker-compose ps
