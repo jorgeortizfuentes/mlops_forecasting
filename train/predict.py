@@ -19,7 +19,9 @@ class PowerPredictor:
         """
         self.model_path = model_path
         self.models_info = (
-            pd.read_csv(os.path.join(model_path, "models_info.csv")).iloc[-1].to_dict()
+            pd.read_csv(os.path.join(model_path, "models_info.csv"))
+            .iloc[-1]
+            .to_dict()
         )
         self.last_date = datetime.strptime(
             self.models_info["last_date"], "%Y-%m-%d %H:%M:%S"
@@ -32,8 +34,8 @@ class PowerPredictor:
         self.model.to_cpu()
 
     def get_time_position(self, date: datetime):
-        """Calculates the number of predictions to make based on the time between the input date and the last date
-        of the model's training data.
+        """Calculates the number of predictions to make based on the time
+        between the input date and the last date of the model's training data.
 
         Args:
             date (datetime): The datetime for which to make predictions.
@@ -41,7 +43,6 @@ class PowerPredictor:
         Returns:
             int: the number of predictions to make.
         """
-        # Count the number of times between the last date and the date we want (by 10 minutes)
         return (date - self.last_date).days * 144 + (
             date - self.last_date
         ).seconds // 600
@@ -79,7 +80,9 @@ class PowerPredictor:
         data = [
             {
                 "ds": d["ds"],
-                "ActivePower": 0 if pd.isna(d["ActivePower"]) else d["ActivePower"],
+                "ActivePower": 0
+                if pd.isna(d["ActivePower"])
+                else d["ActivePower"],
             }
             for d in data
         ]

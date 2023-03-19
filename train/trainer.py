@@ -1,13 +1,11 @@
 import os
 from datetime import datetime
 
-import matplotlib.pyplot as plt
 import numpy as np
 import pandas as pd
 import torch
 from config import DATA_PATH, PATH_TO_SAVE_MODELS
 from darts import TimeSeries
-from darts.metrics import mae, mape, rmse
 from darts.models import TCNModel
 from preprocess import DataPreprocessor
 
@@ -27,7 +25,8 @@ class Trainer:
 
     def load_preprocess_data(self, data_path):
         """
-        Preprocesses data using DataPreprocessor class and returns a TimeSeries object for training.
+        Preprocesses data using DataPreprocessor class and
+        returns a TimeSeries object for training.
         """
         self.df = DataPreprocessor(data_path).preprocess()
         self.train = TimeSeries.from_dataframe(
@@ -41,17 +40,22 @@ class Trainer:
         return self.train
 
     def get_best_hyperparameters(self):
-        """Reads the hyperparameters_results.csv file, deletes rows with rmse_score == inf,
-        and gets the best hyperparameters based on the rmse_score.
+        """Reads the hyperparameters_results.csv file, deletes rows
+        with rmse_score == inf, and gets the best hyperparameters
+        based on the rmse_score.
         """
         self.hp_df = pd.read_csv(self.hyperparameters_path)
         self.hp_df = self.hp_df[self.hp_df["rmse_score"] != np.inf]
         self.hyperparameters = (
-            self.hp_df.sort_values(by="rmse_score", ascending=True).iloc[0].to_dict()
+            self.hp_df.sort_values(by="rmse_score", ascending=True)
+            .iloc[0]
+            .to_dict()
         )
 
     def fit_model(self):
-        """Trains a TCNModel using the best hyperparameters and fits it on the training set."""
+        """Trains a TCNModel using the best hyperparameters and
+        fits it on the training set.
+        """
         self.get_best_hyperparameters()
         self.model = TCNModel(
             input_chunk_length=int(self.hyperparameters["input_chunk_length"]),
@@ -68,23 +72,25 @@ class Trainer:
         self.model.fit(self.train)
 
     def save_model(self, PATH_TO_SAVE_MODELS):
-        """Saves the trained model with the current time in the filename and saves the info
-        about the hyperparameters and the model in models_info.csv.
+        """Saves the trained model with the current time in the
+        filename and saves the info about the hyperparameters
+        and the model in models_info.csv.
         """
         self.PATH_TO_SAVE_MODELS = PATH_TO_SAVE_MODELS
-        self.model.save(
-            os.path.join(self.PATH_TO_SAVE_MODELS, f"tcn_model_{self.current_time}.pt")
+        file_path = os.path.join(
+            self.PATH_TO_SAVE_MODELS, f"tcn_model_{self.current_time}.pt"
         )
-        print(
-            f"Model saved at {os.path.join(self.PATH_TO_SAVE_MODELS, f'tcn_model_{self.current_time}.pt')}"
-        )
+        self.model.save(file_path)
+        print(f"Model saved at {file_path}")
 
         model_info_dict = {
             "model_name": f"tcn_model_{self.current_time}.pt",
             "rmse_score": self.hyperparameters["rmse_score"],
             "mae_score": self.hyperparameters["mae_score"],
             "trained_date": self.current_time,
-            "input_chunk_length": int(self.hyperparameters["input_chunk_length"]),
+            "input_chunk_length": int(
+                self.hyperparameters["input_chunk_length"]
+            ),
             "output_chunk_length": 80,
             "n_epochs": int(self.hyperparameters["n_epochs"]),
             "num_layers": int(self.hyperparameters["num_layers"]),
@@ -99,7 +105,9 @@ class Trainer:
             "last_date": self.df["ds"].max(),
         }
 
-        self.models_info_path = os.path.join(PATH_TO_SAVE_MODELS, "models_info.csv")
+        self.models_info_path = os.path.join(
+            PATH_TO_SAVE_MODELS, "models_info.csv"
+        )
 
         if not os.path.exists(self.models_info_path):
             models_info = pd.DataFrame(model_info_dict)
