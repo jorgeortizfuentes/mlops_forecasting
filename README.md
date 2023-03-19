@@ -57,11 +57,11 @@ El preprocesamiento de datos fue una etapa fundamental para realizar las predicc
 
 Se ha convertido la columna "ds" a formato de fecha y se ha eliminado la zona horaria.
 
-### Rellenar datos faltantes
+#### Rellenar datos faltantes
 
 Se han rellenado los valores faltantes en las otras columnas con el valor 0. Se podrían haber probado otras formas, tales como medidas de estadística descriptiva para reemplazar los valores. Sin embargo, esto se deja como una tarea pendiente para el futuro.
 
-### Eliminar columnas duplicadas y las irrelevantes
+#### Eliminar columnas duplicadas y las irrelevantes
 
 Se han eliminado las columnas "Blade3PitchAngle" y "WindDirection", ya que contienen información duplicada. Se eliminó también la columna "WTG" ya que no contiene información útil.
 
@@ -101,7 +101,9 @@ El RMSE es similar a la MAE, pero tiene en cuenta la magnitud de los errores al 
 
 A partir de los experimentos realizados en los notebooks se observó que el modelo que entregó mejores resultados fue TCN. Este modelo utiliza capas convolucionales 1D para procesar secuencias de datos en una ventana de tiempo, lo que permite capturar patrones a diferentes escalas de tiempo en una serie de tiempo. Además, el modelo utiliza una técnica conocida como dilatación causal, que permite aumentar el tamaño efectivo de la ventana de tiempo que se procesa mientras se mantiene el mismo tamaño de ventana de tiempo en las capas convolucionales.
 
-Para entrenar el modelo final, se utilizó una búsqueda de hiperparámetros con la biblioteca Optuna, que utiliza técnicas bayesianas para optimizar la búsqueda de las mejores métricas. Esto permitió encontrar la combinación óptima de hiperparámetros para minimizar el error de predicción RMSE en un conjunto de validación. Los hiperparámetros que se optimizaron fueron: la longitud de la ventana de entrada, el número de capas convolucionales, el número de filtros en cada capa, el dropout y el número de épocas de entrenamiento.
+Para entrenar el modelo final, se utilizó una búsqueda de hiperparámetros con la biblioteca Optuna, que utiliza técnicas bayesianas para optimizar la búsqueda de las mejores métricas. Esto permitió encontrar la combinación óptima de hiperparámetros para minimizar el error de predicción RMSE en un conjunto de validación del 30% de los datos. Los hiperparámetros que se optimizaron fueron: la longitud de la ventana de entrada, el número de capas convolucionales, el número de filtros en cada capa, el dropout y el número de épocas de entrenamiento. 
+
+Se acotó la búsqueda de hiperparámetros a arquitecturas pequeñas (de máximo 5 capas ocultas) con el propósito de posteriormente realizar las inferencias a través de CPU, sin necesidad de contar con GPU. 
 
 Todas las combinaciones de hiperparámetros y las métricas obtenidas se guardaron en el archivo `hyperparameters_results.csv`. Estos valores son utilizados posteriormente para el entrenamiento del modelo final.
 
@@ -203,3 +205,5 @@ A continuación, se presentan algunas ideas de trabajo futuro para seguir mejora
 - Implementar una base de datos para guardar las predicciones y los datos de entrenamiento en lugar de cargar los datos directamente en la memoria.
 
 - Entrenar el modelo con un `output_chunk_length` superior para permitirle al modelo predecir un periodo más extenso en el futuro.
+
+- Implementar tests en producción para medir la calidad de los resultados (con estadística descriptiva), el estado operativo de la API y el tiempo que tarda en hacer las inferencias.

@@ -30,9 +30,9 @@ def objective(trial):
     # Define the hyperparameters to search over
     input_chunk_length = trial.suggest_int("input_chunk_length", 72, 72 * 2)
     num_layers = trial.suggest_int("num_layers", 2, 5)
-    num_filters = 64  # trial.suggest_int('num_filters', 32, 256)
-    n_epochs = trial.suggest_int("n_epochs", 5, 20)  # 5 y 20
-    # dropout = trial.suggest_loguniform('dropout', 0.001, 0.5)
+    num_filters = trial.suggest_int('num_filters', 32, 256)
+    n_epochs = trial.suggest_int("n_epochs", 5, 20)  
+    dropout = trial.suggest_loguniform('dropout', 0.001, 0.5)
     dropout = 0.05
 
     # Create the TCN model with the current hyperparameters
