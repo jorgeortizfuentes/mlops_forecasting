@@ -19,10 +19,11 @@ from predict import PowerPredictor
 
 app = FastAPI()
 
+
 @app.get("/predict/{date}")
 def predict(date: str):
     """
-    Predict the wind power generation from the last date of the training data (2020-03-30 23:50) to the date indicated. 
+    Predict the wind power generation from the last date of the training data (2020-03-30 23:50) to the date indicated.
 
     DISCLAIMER: Tend to fail predictions beyond 5 days from the last day of the training dataset.
 
@@ -36,7 +37,11 @@ def predict(date: str):
     try:
         date = datetime.strptime(date, "%Y-%m-%d %H:%M")
     except:
-        return {"error": "Date format is not correct. Please use %Y-%m-%d %H:%M format."}
+        return {
+            "error": (
+                "Date format is not correct. Please use %Y-%m-%d %H:%M format."
+            )
+        }
 
     # Check if %M is a multiple of 10, if not, round it to the highest multiple of 10
     if date.minute % 10 != 0:

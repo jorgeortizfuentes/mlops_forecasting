@@ -4,7 +4,7 @@ Autor: Jorge Luis Ortiz-Fuentes
 
 ## Resumen
 
-Este es un desafío de aprendizaje automático de dos partes. Primero, se entrenaron modelos para predecir la energía producida por un generador eólico dadas ciertas variables. En la segunda parte, se construyó una API para que el modelo esté disponible en línea.
+Este es un desafío de aprendizaje automático de dos partes. Primero, se entrenaron modelos para predecir la energía producida por un generador eólico dadas ciertas variables. En la segunda parte, se construyó una API para que el modelo esté disponible en línea. En la tercera parte, se explica cómo se puso en producción la API a través de Integración Continua y Entrega Continua (CI/CD).
 
 Puedes ver la API funcionando en el siguiente enlace: [https://awto.ortizfuentes.com/docs#/default/predict_predict__date__get](https://awto.ortizfuentes.com/docs#/default/predict_predict__date__get)
 
@@ -77,15 +77,15 @@ Para este desafío, se probaron 5 técnicas para realizar predicciones multivari
 
 - GRU (Gated Recurrent Unit): es otra variante de las redes neuronales recurrentes que se utiliza para analizar secuencias y series de tiempo, y realizar predicciones.
 
-Los resultados se presentan en la siguiente tabla.
+Los resultados dividiendo el dataset en 70% de entrenamiento y 30% de testing se presentan en la siguiente tabla.
 
-| model    | mae        | rmse       |
-|----------|------------|------------|
-| TCN      | 381.861490 | 569.296836 |
-| XGBModel | 1413.191800| 1531.923404|
-| RNNModel | 414.779924 | 614.625464 |
-| LSTM     | 402.926162 | 601.793033 |
-| GRU      | 415.882181 | 615.402254 |
+| model     | mae       | rmse      |
+|-----------|-----------|-----------|
+| TCN       | 467.073926| 679.943538|
+| XGBModel  | 626.243337| 727.723027|
+| LSTM      | 520.763157| 778.143983|
+| GRU       | 520.950107| 778.422637|
+| RNNModel  | 520.987557| 778.478423|
 
 ## Métricas
 
@@ -103,7 +103,7 @@ Para entrenar el modelo final, se utilizó una búsqueda de hiperparámetros con
 
 Todas las combinaciones de hiperparámetros y las métricas obtenidas se guardaron en el archivo `hyperparameters_results.csv`. Estos valores son utilizados posteriormente para el entrenamiento del modelo final.
 
-Tras la optimización de los hiperparámetros, el mejor modelo obtuvo un resultado de 461.65 `RMSE`.
+Tras la optimización de los hiperparámetros, el mejor modelo obtuvo un resultado de 595.27 `RMSE`.
 
 ## Entrenamiento final
 
@@ -158,30 +158,35 @@ Se crearon tests para probar los scripts `train/preprocess.py`, `train/trainer.p
 python -m unittest discover tests/
 ```
 
-### Docker
+## CI/CD de la API
 
-La API se puede inicializar de dos maneras:
+### Dockerización y lanzamiento de la API
 
-1. Ejecutar el archivo `main.py`para probar la API. No se recomienda este método para poner la API en producción.
-
-2. Ejecutar la API a través de Docker con `uvicorn`. Para ello se debe crear el container con el siguiente comando en consola:
+En el repositorio se encuentra un archivo Dockerfile con las instrucciones para dockerizar de manera eficiente la API. Para ello se debe construir la imagen con el siguiente comando en consola:
 
 ```bash
 docker build -t energy-api .
 ```
 
-Esto construye un container en un ambiente de Python 3.8.16, copia los archivos necesarios, instala las dependencias y ejecuta los tests para comprobar que la API funcionará sin problemas. 
+Esto comando construye la imagen de un container en un ambiente de Python 3.8.16, copia los archivos necesarios, instala las dependencias y ejecuta los tests para comprobar que la API funcionará sin problemas.
 
-Luego, se debe ejecutar el container en el puerto 8282:
+Luego, se debe ejecutar el container en el puerto 8282 con el siguiente comando:
 
-```
+```bash
 docker run -p 8282:8282 energy-api
 ```
 
-Una vez lanzado Docker, se puede realizar una petición GET a la siguiente URL: "http://localhost:8282/predict/{fecha y hora}" (sustituye "{fecha y hora}" por la fecha y hora en formato "YYYY-MM-DD HH:MM"). La API devolverá un JSON con la predicción de la producción de energía correspondiente a la fecha y hora especificadas.
+Una vez lanzado Docker, se puede realizar una petición GET a la siguiente URL: "localhost:8282/predict/{fecha y hora}" (sustituye "{fecha y hora}" por la fecha y hora en formato "YYYY-MM-DD HH:MM"). La API devolverá un JSON con la predicción de la producción de energía correspondiente a la fecha y hora especificadas.
 
 Por ejemplo, si quieres predecir la producción de energía para el 31 de marzo de 2020 a las 04:50, deberás hacer una petición GET de la siguiente forma "2020-03-31 04:50".
 
+### CI/CD
+
+Con el objetivo de implementar la API en producción y asegurar su continuidad operativa, se han establecido dos flujos de trabajo a través de GitHub Actions.
+
+1. El primer flujo ejecuta automáticamente los tests y verifica la seguridad de los paquetes antes de cada push.
+
+2. El segundo flujo actualiza automáticamente la imagen Docker en el servidor de producción cada vez que se realiza un push, y si los tests pasan, la imagen se ejecuta en producción.
 
 ## Posibles mejoras
 
