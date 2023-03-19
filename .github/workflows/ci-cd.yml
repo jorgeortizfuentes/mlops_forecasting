@@ -1,27 +1,21 @@
-name: CI/CD Pipeline
-on:
-  push:
-    branches: [ main ]
-jobs:
-  build:
-    name: Build Docker Image
-    runs-on: ubuntu-latest
-    steps:
-    - name: Checkout Source Code
-      uses: actions/checkout@v2
-    - name: Set up Docker Environment
-      uses: docker/setup-docker@v2
-    - name: Build Docker Image
-      uses: docker/build-push-action@v2
-      with:
-        context: .
-        file: ./Dockerfile
-        push: false
-        tags: energy-api:${{ github.sha }}
-    - name: Run Docker Image
-      uses: docker/compose-action@1.2.0
-      with:
-        file: docker-compose.yaml
-        service: energy-api
-        command: up
-        options: -d -p 8282:8282
+# name: Docker Image CI
+
+# on:
+#   push:
+#     branches: [ "main" ]
+#   pull_request:
+#     branches: [ "main" ]
+
+# jobs:
+
+#   build:
+#     runs-on: ubuntu-latest
+
+#     steps:
+#     - uses: actions/checkout@v3
+#     - name: Build and run the Docker image
+#     # Build image with docker-compose up and then run it and next restart
+#       run: |      
+#         docker-compose build
+#         docker-compose up -d --remove-orphans
+#         docker-compose ps

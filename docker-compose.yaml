@@ -1,9 +1,13 @@
-version: "3"
+version: '3'
+
 services:
   energy-api:
-    image: energy-api:${{ github.sha }}
-  networks:
-    - nginxproxymanager_default
+    build:
+      context: .
+    ports:
+      - "8282:8282"
+    networks:
+      - nginxproxymanager_default
 
 networks:
   nginxproxymanager_default:
